@@ -1,3 +1,4 @@
+package model;
 public class Jeans {
 
     private String estilo;

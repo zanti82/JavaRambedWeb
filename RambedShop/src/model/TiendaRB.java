@@ -1,3 +1,4 @@
+package model;
 /*Esta clase va a manejar los arraylist de las refrencia de jeans, los administradores y los clientes.
  * Va a manejar un CRUD para jeans y clientes.
  */

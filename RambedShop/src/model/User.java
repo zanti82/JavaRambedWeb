@@ -1,3 +1,4 @@
+package model;
 /*Esta clase crea objetos tipo usuarios */
 
 public class User {
@@ -20,6 +21,13 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
+
+    
+
+    public User() {
+    }
+
+
 
     //METODOS GET AND SET
     public String getId() {

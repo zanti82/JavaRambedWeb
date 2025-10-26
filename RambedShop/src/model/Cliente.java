@@ -1,3 +1,4 @@
+package model;
 /* Esta clase permite crear objetos de tipo clientes que tiene atributos de tipo user */
 
 public class Cliente extends User {
@@ -9,7 +10,15 @@ public class Cliente extends User {
      super(id, name, mail, password, phoneNumber, address);
         this.cliente = true;
     }
-    
+
+      
+    //contructor vacio
+    public Cliente() {
+        super();
+    }
+
+
+
 
     public boolean isCliente() {
         return cliente;
@@ -22,12 +31,7 @@ public class Cliente extends User {
     }
 
 
-        
-   // verCatalogo();
 
-    //realizarCompra();
-
-    //verFactura();
        
    
     

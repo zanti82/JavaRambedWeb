@@ -1,3 +1,4 @@
+package model;
 /**
  *  Esta clase permite crear objetos de tipo adminitradores que tiene atributos de tipo user
  * 
@@ -14,6 +15,20 @@ public class Admin extends User {
             super(id, name, mail, password, phoneNumber, address);
             this.admin = true;
         }
+
+        
+
+ 
+
+
+    public Admin() {
+        super();
+    }
+
+
+
+
+
 
     public boolean isAdmin() {
         return admin;

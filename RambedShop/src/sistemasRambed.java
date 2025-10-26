@@ -6,10 +6,20 @@
  */
 
 
-
-
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import conexion.StatementsAdmin;
+import conexion.StatementsClientes;
+import conexion.conexionJDB;
+import model.Admin;
+import model.Cliente;
+import model.Factura;
+import model.Jeans;
+import model.TiendaRB;
+import model.User;
 
 
 
@@ -27,9 +37,23 @@ public class sistemasRambed {
     static double ventaTotal=0;
     static int cont=0;
 
+    
     public static void main(String[] args) {
 
-       
+        //BLOQUE PARA BASE DE DATOS
+
+        Connection pruebaConn = conexionJDB.conectar();
+
+        if (pruebaConn != null) {
+            System.out.println("RESULTADO: ¡La conexión es EXITOSA!");
+            // 3. Cerrar la conexión si se estableció
+            conexionJDB.cerrar(pruebaConn);
+        } else {
+            System.out.println("RESULTADO: La conexión FALLÓ. Revisa la URL, credenciales y driver.");
+        }
+        System.out.println("--- PRUEBA FINALIZADA ---");
+
+              
        
         //BLOQUE PARA GAUARDAR CLIENTES, ADMINISTRADORES, JEANS
 
@@ -38,26 +62,70 @@ public class sistemasRambed {
         ArrayList<Jeans> listaJeans= new ArrayList<>();
         ArrayList<Factura> listaFacturas=new ArrayList<>();
 
-        //aca creo los admin
+        TiendaRB tiendaVirtualRB= new TiendaRB(listaJeans, listaClientes, listaAdmin, listaFacturas);
+
+        System.out.println("************************************************************");
+        System.out.println("*************************LISTA CLIENTES*********************");
+        System.out.println("************************************************************");
+
+        StatementsClientes queryClientes= new StatementsClientes();
+
+        try {
+            listaClientes=queryClientes.obtenerTodosClientes();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        for (Cliente c : listaClientes) {
+            System.out.println("id:"+c.getId() +
+                               " - nombre: "+c.getName() );
+            
+        }
+        
+        System.out.println("************************************************************");
+        System.out.println("*************************LISTA ADMINISTRADORES**************");
+        System.out.println("************************************************************");
+
+        StatementsAdmin newqueryAdmin = new StatementsAdmin();
+
+        try {
+            listaAdmin=newqueryAdmin.obtenerTodosAdmins();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        for (Admin a : listaAdmin) {
+            System.out.println("id:"+ a.getId() +
+                               " - nombre: "+ a.getName() );
+            
+        }
+
+        /* 
+        //aca creo los admin ESTO ES VIEJO ANTES DEL SQL
         Admin adm1= new Admin("100234","Julian", "julina@mail.com", "1111","32100000",  "crr 20");
         Admin adm2= new Admin("100235","Maricela", "maricela@mail.com", "2222","32100033",  "calle 22");
         Admin adm3= new Admin("100236","MariaJ", "maria@mail.com", "3333","32100022",  "crr 30");
         Admin adm4= new Admin("100237","Santiago", "santi@mail.com", "4444","32100044",  "cll 49");
-       
+      
         //los anexamos al arraylist instanciando una clase tienda
         /**
          * La clase tienda recoge la informacion de las listas de administradores, cliente y productos
          * Queda faltando la de las facturas
-         */
+         
 
-        TiendaRB tiendaVirtualRB= new TiendaRB(listaJeans, listaClientes, listaAdmin, listaFacturas);
+        
 
         tiendaVirtualRB.addAdmin(adm1);
         tiendaVirtualRB.addAdmin(adm2);
         tiendaVirtualRB.addAdmin(adm3);
         tiendaVirtualRB.addAdmin(adm4);
-             
+        */   
+        
+        
         //creación de objetos jeans para tener una lista
+      
 
         Jeans ref1= new Jeans(1001,"ClasicoDenim", 89000);
         Jeans ref2= new Jeans(1002,"ClasicoDril", 89000);
@@ -70,6 +138,7 @@ public class sistemasRambed {
         tiendaVirtualRB.addRef(ref2);
         tiendaVirtualRB.addRef(ref3);
         tiendaVirtualRB.addRef(ref4);
+        
         
         
         
