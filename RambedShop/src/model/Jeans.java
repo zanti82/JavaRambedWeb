@@ -15,7 +15,12 @@ public class Jeans {
                   
 }
 
-    
+//contructo vacio
+    public Jeans() {
+    }
+
+
+
     public int getId() {
         return id;
     }
@@ -43,15 +48,5 @@ public class Jeans {
         this.estilo = estilo;
     }
 
-
-
-
-  
-
-    
-
-  
-
-    
-    
+   
 }

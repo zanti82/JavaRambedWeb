@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import conexion.StatementsAdmin;
 import conexion.StatementsClientes;
+import conexion.StatementsJeans;
 import conexion.conexionJDB;
 import model.Admin;
 import model.Cliente;
@@ -73,7 +74,7 @@ public class sistemasRambed {
         try {
             listaClientes=queryClientes.obtenerTodosClientes();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+           
             e.printStackTrace();
         }
 
@@ -92,7 +93,7 @@ public class sistemasRambed {
         try {
             listaAdmin=newqueryAdmin.obtenerTodosAdmins();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+           
             e.printStackTrace();
         }
 
@@ -125,8 +126,27 @@ public class sistemasRambed {
         
         
         //creación de objetos jeans para tener una lista
-      
 
+    System.out.println("************************************************************");
+    System.out.println("*************************LISTA JENAS**************");
+    System.out.println("************************************************************");
+
+        StatementsJeans newqueryJeans = new StatementsJeans();
+
+        try {
+            listaJeans=newqueryJeans.obtenerTodasRef();
+        } catch (SQLException e) {
+           
+            e.printStackTrace();
+        }
+
+        for (Jeans j : listaJeans) {
+            System.out.println("id:"+ j.getId() +
+                               " - nombre: "+ j.getEstilo() );
+            
+        }
+      
+/* 
         Jeans ref1= new Jeans(1001,"ClasicoDenim", 89000);
         Jeans ref2= new Jeans(1002,"ClasicoDril", 89000);
         Jeans ref3= new Jeans(1003,"CargoDril", 110000);
@@ -140,7 +160,7 @@ public class sistemasRambed {
         tiendaVirtualRB.addRef(ref4);
         
         
-        
+ */       
         
         // BLOQUE FACTURAS con arrays simples
         int contFac=0;
