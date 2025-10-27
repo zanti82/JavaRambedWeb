@@ -53,7 +53,7 @@ public class StatementsClientes {
     // READ
     public ArrayList<Cliente> obtenerTodosClientes() throws SQLException {
         ArrayList<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM Cliente order by Nombre";
+        String sql = "SELECT * FROM Cliente";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -131,7 +131,7 @@ public class StatementsClientes {
     }
 
     // 🔹 DELETE
-    public boolean eliminar(String id) {
+    public boolean eliminar(int id) {
         String sql = "DELETE FROM articulo WHERE id_Cliente=?";
 
         Connection conn = null;
@@ -141,7 +141,7 @@ public class StatementsClientes {
             conn = conexionJDB.conectar();
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, id);
+            pstmt.setInt(1, id);
 
             int filas = pstmt.executeUpdate();
             System.out.println("Registros eliminados: " + filas);
