@@ -83,6 +83,39 @@ public class sistemasRambed {
                                " - nombre: "+c.getName() );
             
         }
+     
+
+     System.out.println("************************************************************");
+     System.out.println("*************************guardar cliente**************");
+     System.out.println("************************************************************");
+ 
+         StatementsClientes saveCl = new StatementsClientes();
+         Cliente cl1= new Cliente("1321", "nuevo", "n@m.com", "2121", "21111", "crrnueva");
+
+         
+ 
+         try {
+             saveCl.guardar(cl1);
+         } catch (SQLException e) {
+            
+             e.printStackTrace();
+         }
+ 
+         try {
+            listaClientes=queryClientes.obtenerTodosClientes();
+        } catch (SQLException e) {
+           
+            e.printStackTrace();
+        }
+
+        for (Cliente c : listaClientes) {
+            System.out.println("id:"+c.getId() +
+                               " - nombre: "+c.getName() );
+            
+        }
+  
+             
+         
         
         System.out.println("************************************************************");
         System.out.println("*************************LISTA ADMINISTRADORES**************");

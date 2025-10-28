@@ -41,8 +41,7 @@ public class ppYadi {
                 "Content-Type, X-Requested-With");
         exchange.getResponseHeaders().set("Content-Type",
                 "application/json");
-        exchange.sendResponseHeaders(codigoHttp,
-                respuesta.getBytes().length);
+        exchange.sendResponseHeaders(codigoHttp, respuesta.getBytes().length);
 
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(respuesta.getBytes());
@@ -192,13 +191,11 @@ static class ArticulosHandler implements HttpHandler {
 
 // ArticuloDAO debe tener un método que devuelvala vista completa
 
-                    List<Cliente> cliente =
-                            cl.obtenerTodosClientes();
-                    respuesta = gson.toJson(cliente);
+                    List<Cliente> clientes = cl.obtenerTodosClientes();
+                    respuesta = gson.toJson(clientes);
                     break;
                 case "POST":
-                    Cliente clNuevo = gson.fromJson(new
-                            InputStreamReader(exchange.getRequestBody()), Cliente.class);
+                    Cliente clNuevo = gson.fromJson(new InputStreamReader(exchange.getRequestBody()), Cliente.class);
                     boolean exitoCrear = cl.guardar(clNuevo);
                     respuesta = exitoCrear ? "{\"mensaje\":\"Artículo creado\"}" : "{\"mensaje\": \"Error al crear\"}";
                     codigoHttp = exitoCrear ? 201 : 500;

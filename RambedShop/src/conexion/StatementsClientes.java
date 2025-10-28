@@ -27,7 +27,7 @@ public class StatementsClientes {
             pstmt.setString(3, cliente.getMail());
             pstmt.setString(4, cliente.getPassword());
             pstmt.setString(5, cliente.getPhoneNumber());
-            pstmt.setString(5, cliente.getAddress());
+            pstmt.setString(6, cliente.getAddress());
 
             int filas = pstmt.executeUpdate(); //  Ejecutas el SQL
             System.out.println(" Registros insertados: " + filas);
@@ -105,12 +105,12 @@ public class StatementsClientes {
         try {
             conn = conexionJDB.conectar();
             pstmt = conn.prepareStatement(sql);
-
-            pstmt.setString(1, cliente.getName());
-            pstmt.setString(2, cliente.getMail());
-            pstmt.setString(3, cliente.getPassword());
-            pstmt.setString(4, cliente.getPhoneNumber());
-            pstmt.setString(5, cliente.getAddress());
+            pstmt.setString(1, cliente.getId());
+            pstmt.setString(2, cliente.getName());
+            pstmt.setString(3, cliente.getMail());
+            pstmt.setString(4, cliente.getPassword());
+            pstmt.setString(5, cliente.getPhoneNumber());
+            pstmt.setString(6, cliente.getAddress());
 
             int filas = pstmt.executeUpdate();
             System.out.println("✏️ Registros actualizados: " + filas);
@@ -132,7 +132,7 @@ public class StatementsClientes {
 
     // 🔹 DELETE
     public boolean eliminar(int id) {
-        String sql = "DELETE FROM articulo WHERE id_Cliente=?";
+        String sql = "DELETE FROM Cliente WHERE ID_Cliente=?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
