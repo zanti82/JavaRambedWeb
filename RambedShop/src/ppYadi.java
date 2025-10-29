@@ -9,7 +9,9 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import conexion.StatementsClientes;
+import conexion.StatementsJeans;
 import model.Cliente;
+import model.Jeans;
 
 import com.google.gson.Gson;
 
@@ -20,7 +22,7 @@ public class ppYadi {
                 InetSocketAddress(8081), 0);
 // Endpoints para cada entidad
         //server.createContext("/api/cliente", new AutoresHandler());
-        //server.createContext("/api/categorias", new CategoriasHandler());
+        server.createContext("/api/referencias", new ReferenciasHandler());
         server.createContext("/api/cliente", new ArticulosHandler());
         server.setExecutor(null);
         server.start();
@@ -227,5 +229,62 @@ static class ArticulosHandler implements HttpHandler {
         enviarRespuesta(exchange, respuesta, codigoHttp);
     }
 }
+
+static class ReferenciasHandler implements HttpHandler {
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod()))
+        {
+            enviarRespuesta(exchange, "", 204);
+            return;
+        }
+        Gson gson = new Gson();
+        StatementsJeans jn = new StatementsJeans(); // <--- Usa jeans
+        String metodo = exchange.getRequestMethod();
+        String respuesta = "";
+        int codigoHttp = 200;
+        try {
+            switch (metodo) {
+                case "GET":
+
+                    List<Jeans> jeans = jn.obtenerTodasRef();
+                    respuesta = gson.toJson(jeans);
+                    break;
+                case "POST":
+                    Jeans jnNuevo = gson.fromJson(new InputStreamReader(exchange.getRequestBody()), Jeans.class);
+                    boolean exitoCrear = jn.guardar(jnNuevo);
+                    respuesta = exitoCrear ? "{\"mensaje\":\"Artículo creado\"}" : "{\"mensaje\": \"Error al crear\"}";
+                    codigoHttp = exitoCrear ? 201 : 500;
+                    break;
+                case "PUT":
+                    Jeans jnActualizar = gson.fromJson(new InputStreamReader(exchange.getRequestBody()), Jeans.class);
+                    boolean exitoActualizar =
+                            jn.actualizar(jnActualizar);
+                    respuesta = exitoActualizar ? "{\"mensaje\":\"Artículo actualizado\"}" : "{\"mensaje\": \"Error al actualizar\"}";
+                    break;
+                case "DELETE":
+                    String path = exchange.getRequestURI().getPath();
+                    int idParaBorrar =
+                            Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
+                    boolean exitoBorrar = jn.eliminar(idParaBorrar);
+                    respuesta = exitoBorrar ? "{\"mensaje\":\"Artículo eliminado\"}" : "{\"mensaje\": \"Error al eliminar\"}";
+                    break;
+                default:
+                    respuesta = "{\"mensaje\": \"Método no soportado\"}";
+                    codigoHttp = 405;
+                    break;
+            }
+        } catch (SQLException e) {
+            respuesta = "{\"mensaje\": \"Error en la base de datos: "
+                    + e.getMessage() + "\"}";
+            codigoHttp = 500;
+            e.printStackTrace();
+        }
+        enviarRespuesta(exchange, respuesta, codigoHttp);
+    }
+}
     
 }
+
+    
+

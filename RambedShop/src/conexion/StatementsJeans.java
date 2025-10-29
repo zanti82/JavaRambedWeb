@@ -51,7 +51,7 @@ public class StatementsJeans {
     // READ
     public ArrayList<Jeans> obtenerTodasRef() throws SQLException {
         ArrayList<Jeans> jeans = new ArrayList<>();
-        String sql = "SELECT * FROM ItemsJeans order by Nombre_Ref";
+        String sql = "SELECT * FROM ItemsJeans";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -92,7 +92,7 @@ public class StatementsJeans {
     }
 
     public boolean actualizar(Jeans jean) {
-        String sql = "UPADTE ItemsJeans SET ID_Ref = ?, Nombre_Ref = ?, Precio = ? WHERE ID_Ref=?";
+        String sql = "UPADTE ItemsJeans SET  Nombre_Ref = ?, Precio = ? WHERE ID_Ref=?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -101,9 +101,10 @@ public class StatementsJeans {
             conn = conexionJDB.conectar();
             pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, jean.getId());
-            pstmt.setString(2, jean.getEstilo());
-            pstmt.setDouble(3, jean.getPrice());
+           
+            pstmt.setString(1, jean.getEstilo());
+            pstmt.setDouble(2, jean.getPrice());
+             pstmt.setInt(3, jean.getId());
            
 
             int filas = pstmt.executeUpdate();

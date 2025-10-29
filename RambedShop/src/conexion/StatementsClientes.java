@@ -97,7 +97,7 @@ public class StatementsClientes {
     }
 
     public boolean actualizar(Cliente cliente) {
-        String sql = "UPDATE Cliente SET nombre=?, email=?, password=?, direccion=?, telefono=? WHERE id_Cliente=?";
+        String sql = "UPDATE Cliente SET Nombre=?, Email=?, Contrasena=?, Telefono=?, Direccion=? WHERE ID_Cliente=?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -105,12 +105,13 @@ public class StatementsClientes {
         try {
             conn = conexionJDB.conectar();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, cliente.getId());
-            pstmt.setString(2, cliente.getName());
-            pstmt.setString(3, cliente.getMail());
-            pstmt.setString(4, cliente.getPassword());
-            pstmt.setString(5, cliente.getPhoneNumber());
-            pstmt.setString(6, cliente.getAddress());
+           
+            pstmt.setString(1, cliente.getName());
+            pstmt.setString(2, cliente.getMail());
+            pstmt.setString(3, cliente.getPassword());
+            pstmt.setString(4, cliente.getPhoneNumber());
+            pstmt.setString(5, cliente.getAddress());
+            pstmt.setString(6, cliente.getId());
 
             int filas = pstmt.executeUpdate();
             System.out.println("✏️ Registros actualizados: " + filas);
